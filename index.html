@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dublin, Ireland — A Travel Chronicle</title>
+
+  <!-- AI-generated styles & scripts linked FIRST -->
+  <link rel="stylesheet" href="ai.css" />
+  <script src="ai.js" defer></script>
+
+  <style>
+    /* ── Navigation ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 3rem;
+      background: rgba(245, 240, 232, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(184, 134, 11, 0.2);
+    }
+    .nav-brand {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--gold);
+      letter-spacing: 0.04em;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-link {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink);
+      opacity: 0.55;
+      transition: opacity 0.25s, color 0.25s;
+      cursor: pointer;
+    }
+    .nav-link:hover,
+    .nav-link.active {
+      opacity: 1;
+      color: var(--gold);
+    }
+
+    /* ── Hero ── */
+    #home {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      padding: 6rem 2rem 4rem;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: -20%;
+      background:
+        radial-gradient(ellipse 80% 60% at 70% 30%, rgba(184,134,11,0.10) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 20% 80%, rgba(74,92,78,0.10) 0%, transparent 60%);
+    }
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.8s ease both;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(3.5rem, 9vw, 7rem);
+      font-weight: 700;
+      line-height: 1;
+      text-align: center;
+      color: var(--ink);
+      position: relative;
+      animation: fadeUp 0.9s 0.15s ease both;
+    }
+    .hero-title em {
+      display: block;
+      font-style: italic;
+      color: var(--rust);
+    }
+    .hero-sub {
+      margin-top: 1.8rem;
+      font-family: var(--font-body);
+      font-size: 1.35rem;
+      font-style: italic;
+      color: var(--sage);
+      text-align: center;
+      max-width: 38ch;
+      animation: fadeUp 1s 0.3s ease both;
+    }
+    .hero-divider {
+      margin-top: 3rem;
+      width: 60px;
+      height: 1px;
+      background: var(--gold);
+      animation: drawLine 1.2s 0.6s ease both;
+    }
+    .hero-scroll {
+      margin-top: 2rem;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink);
+      opacity: 0.4;
+      animation: fadeUp 1s 0.9s ease both;
+    }
+
+    /* ── Section wrappers ── */
+    section {
+      padding: 6rem 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.6rem;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+    .section-title em { font-style: italic; color: var(--rust); }
+    .section-rule {
+      width: 40px;
+      height: 2px;
+      background: var(--gold);
+      margin-bottom: 2.5rem;
+    }
+
+    /* ── Main page summary card ── */
+    .summary-card {
+      background: var(--paper);
+      border: 1px solid rgba(184,134,11,0.25);
+      border-radius: 2px;
+      padding: 3rem 3.5rem;
+      position: relative;
+      margin-bottom: 2rem;
+    }
+    .summary-card::before {
+      content: '"';
+      font-family: var(--font-display);
+      font-size: 8rem;
+      color: var(--gold);
+      opacity: 0.15;
+      position: absolute;
+      top: -1rem;
+      left: 1.5rem;
+      line-height: 1;
+    }
+    .summary-card p {
+      font-size: 1.2rem;
+      font-style: italic;
+      line-height: 1.85;
+      color: var(--ink);
+    }
+    .summary-card p + p { margin-top: 1rem; }
+    .summary-fav {
+      margin-top: 2rem;
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+    }
+    .summary-fav-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      white-space: nowrap;
+    }
+    .summary-fav-value {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.1rem;
+    }
+
+    /* ── Hero image placeholder ── */
+    .img-placeholder {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: linear-gradient(135deg, #d4c9b0 0%, #bfb49a 50%, #c8b98a 100%);
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 2rem;
+      overflow: hidden;
+      position: relative;
+    }
+    .img-placeholder::after {
+      content: attr(data-label);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(26,18,8,0.45);
+    }
+    .img-sm {
+      aspect-ratio: 4 / 3;
+    }
+
+    /* ── Subpage sections ── */
+    .week-section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 5rem 2rem;
+      border-top: 1px solid rgba(184,134,11,0.2);
+    }
+    .week-header {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 2rem;
+      align-items: start;
+      margin-bottom: 3rem;
+    }
+    .week-number {
+      font-family: var(--font-display);
+      font-size: 5rem;
+      font-weight: 700;
+      color: var(--gold);
+      opacity: 0.18;
+      line-height: 0.85;
+      user-select: none;
+    }
+    .week-meta { padding-top: 0.5rem; }
+    .week-subtitle {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 0.25rem;
+    }
+    .week-subtitle em { font-style: italic; color: var(--rust); }
+    .week-date {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--sage);
+    }
+    .week-image {
+      margin-bottom: 2.5rem;
+    }
+    .week-thoughts {
+      font-size: 1.15rem;
+      line-height: 1.9;
+      color: var(--ink);
+    }
+    .week-thoughts p + p { margin-top: 1.2rem; }
+    .week-thoughts strong {
+      font-weight: 700;
+      color: var(--rust);
+    }
+
+    /* ── About Me ── */
+    #about {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 6rem 2rem;
+      border-top: 1px solid rgba(184,134,11,0.2);
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      margin-top: 3rem;
+    }
+    .about-card {
+      background: var(--paper);
+      border: 1px solid rgba(184,134,11,0.2);
+      border-radius: 2px;
+      padding: 2rem;
+    }
+    .about-card-title {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-style: italic;
+      color: var(--rust);
+      margin-bottom: 0.75rem;
+    }
+    .about-card p {
+      font-size: 1rem;
+      line-height: 1.75;
+      opacity: 0.85;
+    }
+    .inspo-card {
+      grid-column: 1 / -1;
+      background: var(--ink);
+      color: var(--cream);
+      border: none;
+      padding: 2.5rem;
+    }
+    .inspo-card .about-card-title { color: var(--gold-light); }
+    .inspo-card p { opacity: 0.8; }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      border-top: 1px solid rgba(184,134,11,0.2);
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink);
+      opacity: 0.4;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      nav { padding: 1rem 1.2rem; }
+      .nav-links { gap: 1.2rem; }
+      .about-grid { grid-template-columns: 1fr; }
+      .week-header { grid-template-columns: 1fr; gap: 0; }
+      .week-number { font-size: 3.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <span class="nav-brand">Dublin, Ireland</span>
+    <ul class="nav-links">
+      <li><a class="nav-link" href="#home">Home</a></li>
+      <li><a class="nav-link" href="#week1">Week I</a></li>
+      <li><a class="nav-link" href="#week2">Week II</a></li>
+      <li><a class="nav-link" href="#week3">Week III</a></li>
+      <li><a class="nav-link" href="#about">About</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── MAIN PAGE / HERO ── -->
+  <section id="home">
+    <div class="hero-bg"></div>
+    <p class="hero-eyebrow">A Travel Chronicle</p>
+    <h1 class="hero-title">
+      Dublin,<br>
+      <em>Ireland</em>
+    </h1>
+    <p class="hero-sub">Three weeks of cobblestones, Guinness, Georgian doors, and something that felt a lot like belonging.</p>
+    <div class="hero-divider"></div>
+    <p class="hero-scroll">↓ Scroll to explore</p>
+  </section>
+
+  <!-- Main page body -->
+  <section id="main-content">
+    <div class="reveal">
+      <p class="section-label">Main Page</p>
+      <h2 class="section-title">The <em>Overview</em></h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <div class="reveal img-placeholder" data-label="Add your hero photo here"></div>
+
+    <div class="summary-card reveal">
+      <p>
+        Dublin surprised me in every way I didn't expect to be surprised. I'd imagined rain-slicked streets
+        and ruddy pub interiors — and I got those, of course — but I hadn't counted on the literary ghosts
+        around every corner, the warmth of strangers in queues, or how the River Liffey looks at dusk when
+        the Georgian lamps catch the water.
+      </p>
+      <p>
+        Three weeks. Three wildly different rhythms. This is how it happened, in order.
+      </p>
+      <div class="summary-fav">
+        <span class="summary-fav-label">Favourite moment —</span>
+        <span class="summary-fav-value">Standing in Temple Bar at midnight, listening to trad music spill out onto the cobblestones.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── WEEK 1 SUBPAGE ── -->
+  <div class="week-section reveal" id="week1">
+    <div class="week-header">
+      <div class="week-number">01</div>
+      <div class="week-meta">
+        <p class="section-label">Subpage · Week One</p>
+        <h2 class="week-subtitle"><em>Arrivals</em> &amp; Temple Bar</h2>
+        <p class="week-date">Days 1–7 · Getting my bearings</p>
+      </div>
+    </div>
+
+    <div class="week-image reveal">
+      <div class="img-placeholder img-sm" data-label="Add your Temple Bar photo here"></div>
+    </div>
+
+    <div class="week-thoughts reveal">
+      <p>
+        I landed at Dublin Airport on a Tuesday morning with a rolling suitcase, jet lag,
+        and absolutely no plan for lunch. The taxi driver immediately began telling me about
+        the Dubs' chances in the championship. I nodded along. This felt like the right start.
+      </p>
+      <p>
+        <strong>Temple Bar</strong> became my gravitational centre that first week. Technically it's a neighbourhood,
+        not just a pub — though the pub is certainly the beating heart of it. Cobblestones designed to slow you
+        down, strings of fairy lights that make everything look like a film set, and live trad sessions that begin
+        at 3pm and end whenever the musicians feel like it.
+      </p>
+      <p>
+        I ate fish and chips standing at a high table. I bought a second-hand paperback of Dubliners from a
+        stall off Dame Street. I got completely lost trying to find Grogan's, and then walked past it three times.
+        Week one felt like learning a new city's grammar.
+      </p>
+    </div>
+  </div>
+
+  <!-- ── WEEK 2 SUBPAGE ── -->
+  <div class="week-section reveal" id="week2">
+    <div class="week-header">
+      <div class="week-number">02</div>
+      <div class="week-meta">
+        <p class="section-label">Subpage · Week Two</p>
+        <h2 class="week-subtitle"><em>Deeper</em> into the City</h2>
+        <p class="week-date">Days 8–14 · Finding the locals' Dublin</p>
+      </div>
+    </div>
+
+    <div class="week-image reveal">
+      <div class="img-placeholder img-sm" data-label="Add your Week 2 photo here"></div>
+    </div>
+
+    <div class="week-thoughts reveal">
+      <p>
+        By week two I'd stopped carrying my map. I knew which coffee shops opened early, which bus route
+        skirted the quays most efficiently, and where to find proper brown bread. This felt like a victory.
+      </p>
+      <p>
+        I spent a long afternoon at the <strong>Chester Beatty Library</strong> — free, extraordinary, and
+        almost always quieter than it deserves to be. Then a rainy evening at the National Gallery,
+        where I sat in front of a Caravaggio for twenty minutes and didn't think about anything in particular.
+      </p>
+      <p>
+        The Georgian squares opened up to me this week. Merrion Square, Fitzwilliam Square — all that
+        dignified symmetry and those famous coloured doors. I began photographing every door I passed.
+        By Thursday I had 47 photographs of doors. I regret nothing.
+      </p>
+    </div>
+  </div>
+
+  <!-- ── WEEK 3 SUBPAGE ── -->
+  <div class="week-section reveal" id="week3">
+    <div class="week-header">
+      <div class="week-number">03</div>
+      <div class="week-meta">
+        <p class="section-label">Subpage · Week Three</p>
+        <h2 class="week-subtitle"><em>Slow</em> Days &amp; Leaving</h2>
+        <p class="week-date">Days 15–21 · Making peace with departure</p>
+      </div>
+    </div>
+
+    <div class="week-image reveal">
+      <div class="img-placeholder img-sm" data-label="Add your Week 3 photo here"></div>
+    </div>
+
+    <div class="week-thoughts reveal">
+      <p>
+        The last week always has a different quality. You start noticing the things you'll miss — the
+        specific sound of seagulls over the Ha'penny Bridge, the way people say "grand" to mean
+        approximately seventeen different things depending on inflection.
+      </p>
+      <p>
+        I took a day trip to <strong>Howth</strong>, a fishing village a short DART ride up the coast.
+        Walked the cliff path. Ate smoked salmon from a paper bag. Watched seals in the harbour.
+        It was the kind of afternoon that makes you recalibrate what a good day actually means.
+      </p>
+      <p>
+        My last evening back in Temple Bar. Same cobblestones, same music bleeding out of the same doors.
+        But this time I wasn't lost. I ordered a Guinness, found a stool, and just listened.
+        That felt like enough.
+      </p>
+    </div>
+  </div>
+
+  <!-- ── ABOUT ME ── -->
+  <section id="about">
+    <div class="reveal">
+      <p class="section-label">About Me</p>
+      <h2 class="section-title">The <em>Traveller</em></h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-card reveal">
+        <h3 class="about-card-title">Bio</h3>
+        <p>
+          A wanderer with a notebook and a mild obsession with bookshops.
+          I travel slowly, eat locally, and always stay longer than planned.
+          Dublin was my third solo trip — and the first city that felt like it was
+          actually glad I'd come.
+        </p>
+      </div>
+
+      <div class="about-card reveal">
+        <h3 class="about-card-title">Hobbies</h3>
+        <p>
+          Reading in cafés. Long walks with no fixed destination. Trad music
+          (listening, not playing — I have tried). Street photography. Collecting
+          postcards I never send. Finding the best brown bread in any given city.
+        </p>
+      </div>
+
+      <div class="about-card inspo-card reveal">
+        <h3 class="about-card-title">Inspiration Behind This Site</h3>
+        <p>
+          I wanted a record that was more than an Instagram grid — something with
+          texture and time. Travel writing taught me that the best souvenirs are
+          the details you almost forgot: the smell of a bookshop, the sound of rain
+          on cobblestones, the exact quality of light on the Liffey at dusk.
+          This site is my attempt to keep those things alive.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Dublin, Ireland &mdash; A Travel Chronicle &mdash; All rights reserved</p>
+  </footer>
+
+</body>
+</html>
